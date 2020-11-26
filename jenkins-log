@@ -1,0 +1,339 @@
+Started by user admin
+ > git rev-parse --is-inside-work-tree # timeout=10
+Setting origin to https://github.com/kxw9298/gceme.git
+ > git config remote.origin.url https://github.com/kxw9298/gceme.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git --version # 'git version 2.11.0'
+ > git config --get remote.origin.url # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/canary
+Seen branch in repository origin/master
+Seen branch in repository origin/new-feature
+Seen 3 remote branches
+Obtained Jenkinsfile from e8cf1ebc2b92a57ea897e8a60f4066b0e96e31ad
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] echo
+[WARNING] label option is deprecated. To use a static pod template, use the 'inheritFrom' option.
+[Pipeline] podTemplate
+[Pipeline] {
+[Pipeline] node
+Created Pod: default/sample-app-6rb89-0f763
+[Normal][default/sample-app-6rb89-0f763][Scheduled] Successfully assigned default/sample-app-6rb89-0f763 to gke-jenkins-cd-default-pool-72e91139-cfq1
+[Normal][default/sample-app-6rb89-0f763][Pulling] Pulling image "gcr.io/cloud-builders/kubectl"
+Still waiting to schedule task
+‘sample-app-6rb89-0f763’ is offline
+[Normal][default/sample-app-6rb89-0f763][Pulled] Successfully pulled image "gcr.io/cloud-builders/kubectl"
+[Normal][default/sample-app-6rb89-0f763][Created] Created container kubectl
+[Normal][default/sample-app-6rb89-0f763][Started] Started container kubectl
+[Normal][default/sample-app-6rb89-0f763][Pulling] Pulling image "gcr.io/cloud-builders/gcloud"
+Created Pod: default/sample-app-6rb89-clf5p
+[Normal][default/sample-app-6rb89-clf5p][Scheduled] Successfully assigned default/sample-app-6rb89-clf5p to gke-jenkins-cd-default-pool-72e91139-cfq1
+[Normal][default/sample-app-6rb89-clf5p][Pulling] Pulling image "gcr.io/cloud-builders/kubectl"
+[Normal][default/sample-app-6rb89-clf5p][Pulled] Successfully pulled image "gcr.io/cloud-builders/kubectl"
+[Normal][default/sample-app-6rb89-clf5p][Created] Created container kubectl
+[Normal][default/sample-app-6rb89-clf5p][Started] Started container kubectl
+[Normal][default/sample-app-6rb89-clf5p][Pulling] Pulling image "gcr.io/cloud-builders/gcloud"
+[Normal][default/sample-app-6rb89-clf5p][Pulled] Successfully pulled image "gcr.io/cloud-builders/gcloud"
+[Normal][default/sample-app-6rb89-clf5p][Created] Created container gcloud
+[Normal][default/sample-app-6rb89-clf5p][Started] Started container gcloud
+[Normal][default/sample-app-6rb89-clf5p][Pulled] Container image "golang:1.10" already present on machine
+[Normal][default/sample-app-6rb89-clf5p][Created] Created container golang
+[Normal][default/sample-app-6rb89-clf5p][Started] Started container golang
+[Normal][default/sample-app-6rb89-clf5p][Pulled] Container image "jenkins/inbound-agent:4.3-4" already present on machine
+[Normal][default/sample-app-6rb89-clf5p][Created] Created container jnlp
+[Normal][default/sample-app-6rb89-clf5p][Started] Started container jnlp
+Agent sample-app-6rb89-clf5p is provisioned from template sample-app-6rb89
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    buildUrl: "http://cd-jenkins:8080/job/sample-app/job/master/2/"
+    runUrl: "job/sample-app/job/master/2/"
+  labels:
+    jenkins: "slave"
+    jenkins/label-digest: "d031a744136cb799e767b42367f130ee149c1df8"
+    jenkins/label: "sample-app"
+  name: "sample-app-6rb89-clf5p"
+spec:
+  containers:
+  - command:
+    - "cat"
+    image: "gcr.io/cloud-builders/kubectl"
+    name: "kubectl"
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "cat"
+    image: "gcr.io/cloud-builders/gcloud"
+    name: "gcloud"
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "cat"
+    image: "golang:1.10"
+    name: "golang"
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_TUNNEL"
+      value: "cd-jenkins-agent:50000"
+    - name: "JENKINS_AGENT_NAME"
+      value: "sample-app-6rb89-clf5p"
+    - name: "JENKINS_NAME"
+      value: "sample-app-6rb89-clf5p"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    - name: "JENKINS_URL"
+      value: "http://cd-jenkins:8080/"
+    image: "jenkins/inbound-agent:4.3-4"
+    name: "jnlp"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  serviceAccountName: "cd-jenkins"
+  volumes:
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+
+Running on sample-app-6rb89-clf5p in /home/jenkins/agent/workspace/sample-app_master
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential github
+Cloning the remote Git repository
+Cloning with configured refspecs honoured and without tags
+Cloning repository https://github.com/kxw9298/gceme.git
+ > git init /home/jenkins/agent/workspace/sample-app_master # timeout=10
+Fetching upstream changes from https://github.com/kxw9298/gceme.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.20.1'
+using GIT_ASKPASS to set credentials 
+ > git fetch --no-tags --force --progress -- https://github.com/kxw9298/gceme.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision e8cf1ebc2b92a57ea897e8a60f4066b0e96e31ad (master)
+ > git config remote.origin.url https://github.com/kxw9298/gceme.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f e8cf1ebc2b92a57ea897e8a60f4066b0e96e31ad # timeout=10
+Commit message: "update project name"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ pwd
++ ln -s /home/jenkins/agent/workspace/sample-app_master /go/src/sample-app
++ cd /go/src/sample-app
++ go test
+PASS
+ok  	sample-app	0.084s
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build and push image with Container Builder)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ PYTHONUNBUFFERED=1 gcloud builds submit -t gcr.io/astral-pipe-293319/gceme:master.2 .
+Creating temporary tarball archive of 36 file(s) totalling 80.6 KiB before compression.
+Uploading tarball of [.] to [gs://astral-pipe-293319_cloudbuild/source/1606406760.767233-70a3d3bb733549a2be399c1de254fcf5.tgz]
+Created [https://cloudbuild.googleapis.com/v1/projects/astral-pipe-293319/builds/dca41e97-faf8-44a6-a786-fcebd256ae32].
+Logs are available at [https://console.cloud.google.com/cloud-build/builds/dca41e97-faf8-44a6-a786-fcebd256ae32?project=497480098075].
+----------------------------- REMOTE BUILD OUTPUT ------------------------------
+starting build "dca41e97-faf8-44a6-a786-fcebd256ae32"
+
+FETCHSOURCE
+Fetching storage object: gs://astral-pipe-293319_cloudbuild/source/1606406760.767233-70a3d3bb733549a2be399c1de254fcf5.tgz#1606406761328077
+Copying gs://astral-pipe-293319_cloudbuild/source/1606406760.767233-70a3d3bb733549a2be399c1de254fcf5.tgz#1606406761328077...
+/ [0 files][    0.0 B/ 22.4 KiB]                                                
+/ [1 files][ 22.4 KiB/ 22.4 KiB]                                                
+Operation completed over 1 objects/22.4 KiB.                                     
+BUILD
+Already have image (with digest): gcr.io/cloud-builders/docker
+Sending build context to Docker daemon  118.3kB
+
+Step 1/5 : FROM golang:1.10
+1.10: Pulling from library/golang
+741437d97401: Pulling fs layer
+34d8874714d7: Pulling fs layer
+0a108aa26679: Pulling fs layer
+7f0334c36886: Pulling fs layer
+d35724ed4672: Pulling fs layer
+c0eaf021aeaf: Pulling fs layer
+d3d9c96611f1: Pulling fs layer
+7f0334c36886: Waiting
+d35724ed4672: Waiting
+c0eaf021aeaf: Waiting
+d3d9c96611f1: Waiting
+0a108aa26679: Verifying Checksum
+0a108aa26679: Download complete
+34d8874714d7: Verifying Checksum
+34d8874714d7: Download complete
+7f0334c36886: Verifying Checksum
+7f0334c36886: Download complete
+741437d97401: Verifying Checksum
+741437d97401: Download complete
+d3d9c96611f1: Verifying Checksum
+d3d9c96611f1: Download complete
+d35724ed4672: Verifying Checksum
+d35724ed4672: Download complete
+c0eaf021aeaf: Verifying Checksum
+c0eaf021aeaf: Download complete
+741437d97401: Pull complete
+34d8874714d7: Pull complete
+0a108aa26679: Pull complete
+7f0334c36886: Pull complete
+d35724ed4672: Pull complete
+c0eaf021aeaf: Pull complete
+d3d9c96611f1: Pull complete
+Digest: sha256:6d5e79878a3e4f1b30b7aa4d24fb6ee6184e905a9b172fc72593935633be4c46
+Status: Downloaded newer image for golang:1.10
+ ---> 6fd1f7edb6ab
+Step 2/5 : WORKDIR /go/src/app
+ ---> Running in b397b9b5d1ac
+Removing intermediate container b397b9b5d1ac
+ ---> f15b8e2e1705
+Step 3/5 : COPY . .
+ ---> c102d9c00dd0
+Step 4/5 : RUN go install -v
+ ---> Running in f266c3f95009
+[91mapp/vendor/golang.org/x/net/context
+[0m[91mapp/vendor/golang.org/x/net/context/ctxhttp
+[0m[91mapp/vendor/cloud.google.com/go/compute/metadata
+[0m[91mapp
+[0mRemoving intermediate container f266c3f95009
+ ---> cbc32b93025b
+Step 5/5 : CMD ["app"]
+ ---> Running in de781c7d52a9
+Removing intermediate container de781c7d52a9
+ ---> 134663282421
+Successfully built 134663282421
+Successfully tagged gcr.io/astral-pipe-293319/gceme:master.2
+PUSH
+Pushing gcr.io/astral-pipe-293319/gceme:master.2
+The push refers to repository [gcr.io/astral-pipe-293319/gceme]
+f784e08cf766: Preparing
+73d695c41bc0: Preparing
+b0d3025d470e: Preparing
+7b9a9415bf3a: Preparing
+facf15440126: Preparing
+77b4b6493272: Preparing
+6257fa9f9597: Preparing
+578414b395b9: Preparing
+abc3250a6c7f: Preparing
+13d5529fd232: Preparing
+77b4b6493272: Waiting
+6257fa9f9597: Waiting
+578414b395b9: Waiting
+abc3250a6c7f: Waiting
+13d5529fd232: Waiting
+7b9a9415bf3a: Layer already exists
+facf15440126: Layer already exists
+77b4b6493272: Layer already exists
+6257fa9f9597: Layer already exists
+578414b395b9: Layer already exists
+abc3250a6c7f: Layer already exists
+13d5529fd232: Layer already exists
+73d695c41bc0: Pushed
+b0d3025d470e: Pushed
+f784e08cf766: Pushed
+master.2: digest: sha256:e63a0ebc72f4f42e0e32a2b7814821725eb463403c7982a58220703bbffb5d78 size: 2423
+DONE
+--------------------------------------------------------------------------------
+
+ID                                    CREATE_TIME                DURATION  SOURCE                                                                                            IMAGES                                    STATUS
+dca41e97-faf8-44a6-a786-fcebd256ae32  2020-11-26T16:06:01+00:00  37S       gs://astral-pipe-293319_cloudbuild/source/1606406760.767233-70a3d3bb733549a2be399c1de254fcf5.tgz  gcr.io/astral-pipe-293319/gceme:master.2  SUCCESS
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Canary)
+Stage "Deploy Canary" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Production)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ sed -i.bak s#gcr.io/astral-pipe-293319/gceme:1.0.0#gcr.io/astral-pipe-293319/gceme:master.2# ./k8s/production/backend-production.yaml ./k8s/production/frontend-production.yaml
+[Pipeline] step
+[Pipeline] step
+Verifying manifests: /home/jenkins/agent/workspace/sample-app_master/k8s/production
+Verifying 4 objects: 
+Verifying: apps/v1/Deployment: gceme-backend-production 
+Successfully verified apps/v1/Deployment: gceme-backend-production
+AvailableReplicas = 1, MinimumReplicas = 1
+
+Verifying: apps/v1/Deployment: gceme-backend-production 
+Successfully verified apps/v1/Deployment: gceme-backend-production
+AvailableReplicas = 1, MinimumReplicas = 1
+
+Verifying: apps/v1/Deployment: gceme-frontend-production 
+Successfully verified apps/v1/Deployment: gceme-frontend-production
+AvailableReplicas = 1, MinimumReplicas = 1
+
+Verifying: apps/v1/Deployment: gceme-frontend-production 
+Successfully verified apps/v1/Deployment: gceme-frontend-production
+AvailableReplicas = 1, MinimumReplicas = 1
+
+[Pipeline] sh
++ kubectl --namespace=production get service/gceme-frontend -o jsonpath={.status.loadBalancer.ingress[0].ip}
++ echo http://34.74.216.88
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Dev)
+Stage "Deploy Dev" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // podTemplate
+[Pipeline] End of Pipeline
+Finished: SUCCESS
