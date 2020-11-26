@@ -4,6 +4,8 @@ pipeline {
     PROJECT = "astral-pipe-293319"
     APP_NAME = "gceme"
     FE_SVC_NAME = "${APP_NAME}-frontend"
+    BE_SVC_NAME = "${APP_NAME}-backend"
+
     CLUSTER = "jenkins-cd"
     CLUSTER_ZONE = "us-east1-d"
     IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
@@ -83,7 +85,10 @@ spec:
       steps{
         container('kubectl') {
         // Change deployed image in canary to the one we just built
-          sh("sed -i.bak 's#gcr.io/astral-pipe-293319/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/production/*.yaml")
+          //sh("sed -i.bak 's#gcr.io/astral-pipe-293319/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/production/*.yaml")
+          sh("kkubectl set image -n production deployment/gceme-backend-production backend=gcr.io/astral-pipe-293319/gceme:${IMAGE_TAG}")
+          
+
           step([$class: 'KubernetesEngineBuilder', namespace:'production', projectId: env.PROJECT, clusterName: env.CLUSTER, zone: env.CLUSTER_ZONE, manifestPattern: 'k8s/services', credentialsId: env.JENKINS_CRED, verifyDeployments: false])
           step([$class: 'KubernetesEngineBuilder', namespace:'production', projectId: env.PROJECT, clusterName: env.CLUSTER, zone: env.CLUSTER_ZONE, manifestPattern: 'k8s/production', credentialsId: env.JENKINS_CRED, verifyDeployments: true])
           sh("echo http://`kubectl --namespace=production get service/${FE_SVC_NAME} -o jsonpath='{.status.loadBalancer.ingress[0].ip}'` > ${FE_SVC_NAME}")
