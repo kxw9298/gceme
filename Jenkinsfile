@@ -87,7 +87,7 @@ spec:
         // Change deployed image in canary to the one we just built
           //sh("sed -i.bak 's#gcr.io/astral-pipe-293319/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/production/*.yaml")
           //sh("kubectl set image -n production deployment/gceme-backend-production backend=${IMAGE_TAG}")
-          sh("sed 's#gcr.io/astral-pipe-293319/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/production/backend-production.yaml")
+          sh("sed -i.bak 's#gcr.io/astral-pipe-293319/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/production/backend-production.yaml")
           sh("kubectl apply -f ./k8s/production/backend-production.yaml -n production")
           step([$class: 'KubernetesEngineBuilder', namespace:'production', projectId: env.PROJECT, clusterName: env.CLUSTER, zone: env.CLUSTER_ZONE, manifestPattern: 'k8s/services', credentialsId: env.JENKINS_CRED, verifyDeployments: false])
           step([$class: 'KubernetesEngineBuilder', namespace:'production', projectId: env.PROJECT, clusterName: env.CLUSTER, zone: env.CLUSTER_ZONE, manifestPattern: 'k8s/production', credentialsId: env.JENKINS_CRED, verifyDeployments: true])
